@@ -7,28 +7,8 @@ resource "google_compute_disk" "ethereum_data" {
   size    = var.disk_size_gb
   labels  = var.disk_labels
 
-  # Enable automatic snapshot policies
-  snapshot_schedule_policy {
-    schedule_policy {
-      daily_schedule {
-        days_in_cycle = 1
-        start_time    = "03:00"  # 3 AM UTC
-      }
-    }
-
-    retention_policy {
-      max_retention_days    = var.snapshot_retention_days
-      on_source_disk_delete = "KEEP_AUTO_SNAPSHOTS"
-    }
-  }
-
-  # Enable physical block provisioning for better performance
-  provisioning_type = "STANDARD"
-
-  # Enable automatic deletion of snapshots
-  lifecycle {
-    prevent_destroy = false
-  }
+  # Enable physical block provisioning
+  physical_block_size_bytes = 4096
 }
 
 # Create a snapshot schedule
@@ -41,7 +21,7 @@ resource "google_compute_resource_policy" "snapshot_schedule" {
     schedule {
       daily_schedule {
         days_in_cycle = 1
-        start_time    = "03:00"
+        start_time    = "03:00"  # 3 AM UTC
       }
     }
 
@@ -55,4 +35,12 @@ resource "google_compute_resource_policy" "snapshot_schedule" {
       guest_flush      = true
     }
   }
+}
+
+# Attach the snapshot schedule to the disk
+resource "google_compute_disk_resource_policy_attachment" "attachment" {
+  name    = google_compute_resource_policy.snapshot_schedule.name
+  project = var.project_id
+  zone    = var.zone
+  disk    = google_compute_disk.ethereum_data.name
 }
