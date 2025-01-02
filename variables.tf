@@ -42,13 +42,13 @@ variable "instance_name" {
 variable "machine_type" {
   description = "Machine type for the Ethereum node"
   type        = string
-  default     = "n2-standard-4"  # 4 vCPUs, 16GB memory
+  default     = "n2-standard-4" # 4 vCPUs, 16GB memory
 }
 
 variable "disk_size_gb" {
   description = "Size of the persistent disk in GB"
   type        = number
-  default     = 1024  # 1TB for full node
+  default     = 1024 # 1TB for full node
 }
 
 variable "disk_type" {
@@ -89,5 +89,5 @@ variable "enable_public_ip" {
 variable "allowed_ip_ranges" {
   description = "List of IP ranges allowed to connect to the node"
   type        = list(string)
-  default     = []  # Empty means only internal access
+  default     = [] # Empty means only internal access
 } 

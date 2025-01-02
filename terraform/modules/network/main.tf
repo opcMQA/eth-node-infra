@@ -22,12 +22,12 @@ resource "google_compute_firewall" "ethereum_p2p" {
 
   allow {
     protocol = "tcp"
-    ports    = ["30303"]  # Default Ethereum P2P port
+    ports    = ["30303"] # Default Ethereum P2P port
   }
 
   allow {
     protocol = "udp"
-    ports    = ["30303"]  # Default Ethereum P2P port
+    ports    = ["30303"] # Default Ethereum P2P port
   }
 
   source_ranges = var.allowed_ip_ranges
@@ -42,7 +42,7 @@ resource "google_compute_firewall" "ethereum_rpc" {
 
   allow {
     protocol = "tcp"
-    ports    = ["8545", "8546"]  # Default RPC and WebSocket ports
+    ports    = ["8545", "8546"] # Default RPC and WebSocket ports
   }
 
   source_ranges = var.allowed_ip_ranges

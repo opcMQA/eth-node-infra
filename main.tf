@@ -2,29 +2,29 @@
 module "network" {
   source = "./terraform/modules/network"
 
-  project_id       = var.project_id
-  network_name     = var.network_name
-  subnet_name      = var.subnet_name
-  subnet_cidr      = var.subnet_cidr
-  region          = var.region
+  project_id        = var.project_id
+  network_name      = var.network_name
+  subnet_name       = var.subnet_name
+  subnet_cidr       = var.subnet_cidr
+  region            = var.region
   allowed_ip_ranges = var.allowed_ip_ranges
-  network_tags     = var.tags
+  network_tags      = var.tags
 }
 
 # Storage Module
 module "storage" {
   source = "./terraform/modules/storage"
 
-  project_id              = var.project_id
-  zone                   = var.zone
-  disk_name              = "${var.instance_name}-data"
-  disk_size_gb           = var.disk_size_gb
-  disk_type              = var.disk_type
-  disk_labels            = {
+  project_id   = var.project_id
+  zone         = var.zone
+  disk_name    = "${var.instance_name}-data"
+  disk_size_gb = var.disk_size_gb
+  disk_type    = var.disk_type
+  disk_labels = {
     environment = "production"
     purpose     = "ethereum-mev"
   }
-  snapshot_schedule_name = "${var.instance_name}-snapshot"
+  snapshot_schedule_name  = "${var.instance_name}-snapshot"
   snapshot_retention_days = 7
 }
 
@@ -32,23 +32,23 @@ module "storage" {
 module "compute" {
   source = "./terraform/modules/compute"
 
-  project_id           = var.project_id
-  zone                = var.zone
-  instance_name       = var.instance_name
-  machine_type        = var.machine_type
-  network_self_link   = module.network.network_id
-  subnet_self_link    = module.network.subnet_self_link
-  disk_self_link      = module.storage.disk_self_link
+  project_id            = var.project_id
+  zone                  = var.zone
+  instance_name         = var.instance_name
+  machine_type          = var.machine_type
+  network_self_link     = module.network.network_id
+  subnet_self_link      = module.network.subnet_self_link
+  disk_self_link        = module.storage.disk_self_link
   service_account_email = var.service_account_email
-  tags               = var.tags
-  enable_public_ip   = var.enable_public_ip
-  ethereum_network   = var.ethereum_network
-  ethereum_client    = var.ethereum_client
-  labels             = {
+  tags                  = var.tags
+  enable_public_ip      = var.enable_public_ip
+  ethereum_network      = var.ethereum_network
+  ethereum_client       = var.ethereum_client
+  labels = {
     environment = "production"
     purpose     = "ethereum-mev"
-    network    = var.ethereum_network
-    client     = var.ethereum_client
+    network     = var.ethereum_network
+    client      = var.ethereum_client
   }
 }
 

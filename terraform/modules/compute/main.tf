@@ -10,8 +10,8 @@ resource "google_compute_instance" "ethereum_node" {
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-22-04-lts"
-      size  = 200  # 200GB boot disk for MEV backtesting requirements
-      type  = "pd-ssd"  # SSD for better performance
+      size  = 200      # 200GB boot disk for MEV backtesting requirements
+      type  = "pd-ssd" # SSD for better performance
     }
   }
 
@@ -35,7 +35,7 @@ resource "google_compute_instance" "ethereum_node" {
 
   # Use custom service account
   service_account {
-    email  = var.service_account_email
+    email = var.service_account_email
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
@@ -63,7 +63,7 @@ locals {
     {
       ethereum_network = var.ethereum_network
       ethereum_client  = var.ethereum_client
-      data_disk_name  = split("/", var.disk_self_link)[length(split("/", var.disk_self_link)) - 1]
+      data_disk_name   = split("/", var.disk_self_link)[length(split("/", var.disk_self_link)) - 1]
     }
   )
 }

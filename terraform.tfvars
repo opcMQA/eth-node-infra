@@ -20,9 +20,9 @@ ethereum_client  = "geth"
 
 # Security Configuration
 service_account_email = "your-service-account@your-project.iam.gserviceaccount.com"
-enable_public_ip     = true
-allowed_ip_ranges    = [
-  "YOUR_IP_ADDRESS/32"  # Replace with your IP address
+enable_public_ip      = true
+allowed_ip_ranges = [
+  "YOUR_IP_ADDRESS/32" # Replace with your IP address
 ]
 
 # Instance Tags
