@@ -8,6 +8,13 @@ on:
       - '**.tf'
       - '**.tfvars'
       - '.github/workflows/terraform-deploy.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.tf'
+      - '**.tfvars'
+      - '.github/workflows/terraform-deploy.yml'
   workflow_dispatch:  # Allow manual triggers
 
 permissions:
@@ -47,7 +54,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -backend=false
 
     - name: Terraform Plan
       id: plan
